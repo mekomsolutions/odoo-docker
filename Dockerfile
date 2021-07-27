@@ -2,21 +2,25 @@ from python:3.9-slim
 
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV LANG C.UTF-8
+ARG ODOO_BRANCH=14.0
 
 # Install dependencies
 RUN apt update && apt install -y git npm postgresql-client python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
     libtiff5-dev zlib1g-dev libfreetype6-dev wait-for-it xvfb libfontconfig wkhtmltopdf \
-    liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev
+    liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev gettext-base unzip
 
 RUN pip install phonenumbers
 RUN npm install -g rtlcss
+RUN apt install -y wget gettext-base
 
 RUN mkdir -p /opt/odoo
-RUN git clone https://github.com/mekomsolutions/odoo.git /opt/odoo
+RUN cd /tmp/ && wget https://github.com/mekomsolutions/odoo/archive/refs/heads/${ODOO_BRANCH}.zip \
+    && unzip /tmp/${ODOO_BRANCH}.zip && mv /tmp/odoo-${ODOO_BRANCH}/* /opt/odoo/ && rm /tmp/${ODOO_BRANCH}.zip
 RUN cd /opt/odoo && pip install -r requirements.txt
 
 # Expose Odoo services
 EXPOSE 8069 8071 8072
+VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
 # Set the default config file
 COPY resources/odoo.conf /etc/odoo/odoo.conf

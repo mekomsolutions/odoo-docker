@@ -25,7 +25,7 @@ check_config "db_port" "$PORT"
 check_config "db_user" "$USER"
 check_config "db_password" "$PASSWORD"
 
-if [ -f /etc/properties ]; then
+if [ -d /etc/properties ]; then
     for file in /etc/properties/*; do
         name=$(basename "${file}")
         envsubst < ${file} > /etc/odoo/${name}
