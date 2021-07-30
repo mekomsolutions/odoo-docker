@@ -20,6 +20,9 @@ docker-compose up
 
 ## Volumes
 
-- **/mnt/extra-addons**: Additional addons path
+Data volume
 - **/var/lib/odoo**: Odoo data files path
+
+Optional:
+- **/mnt/extra-addons**: Additional addons path
 - **/etc/properties**: Path to provide alternative `odoo.conf` file
