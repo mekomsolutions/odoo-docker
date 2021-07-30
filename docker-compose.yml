@@ -1,0 +1,17 @@
+version: '2'
+services:
+  odoo:
+    build: 
+      context: ./
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    environment:
+      - ADDONS=sale_management,stock,account_account
+  db:
+    image: postgres:10
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo

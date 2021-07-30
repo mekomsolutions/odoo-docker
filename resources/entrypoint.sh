@@ -8,9 +8,10 @@ set -e
 : ${PORT:=${DB_PORT_5432_TCP_PORT:=5432}}
 : ${USER:=${DB_ENV_POSTGRES_USER:=${POSTGRES_USER:='odoo'}}}
 : ${PASSWORD:=${DB_ENV_POSTGRES_PASSWORD:=${POSTGRES_PASSWORD:='odoo'}}}
+: ${ODOO_DB_NAME:=${DB_NAME:='odoo'}}
 
 : ${ODOO_ADDONS_PATH='/mnt/extra-addons/'}
-: ${INSTALL_ADDONS_LIST:=$INSTALL_ADDONS}
+: ${ADDONS_LIST:=$ADDONS}
 DB_ARGS=()
 function check_config() {
     param="$1"
@@ -33,10 +34,10 @@ if [ -d /etc/properties ]; then
 fi
 
 extra_addons=""
-if [ ! -z "$INSTALL_ADDONS_LIST" ]; then
-    extra_addons="-i $INSTALL_ADDONS_LIST"
+if [ ! -z "$ADDONS_LIST" ]; then
+    addonsList="-i $ADDONS_LIST"
 elif [ -f "${ODOO_ADDONS_PATH}/addons.txt" ]; then
-    extra_addons="-i $INSTALL_ADDONS_LIST"
+    addonsList="-i $ADDONS_LIST"
 fi
 
 wait-for-it --timeout=3600 ${HOST}:${PORT}
@@ -47,12 +48,12 @@ case "$1" in
         if [[ "$1" == "scaffold" ]] ; then
             exec python3 "/opt/odoo/odoo-bin --config /etc/odoo/odoo.conf $@"
         else
-            exec `python3 /opt/odoo/odoo-bin --config /etc/odoo/odoo.conf --without-demo=all $extra_addons -d ${DB_NAME} ${DB_ARGS[@]}`
+            exec `python3 /opt/odoo/odoo-bin --config /etc/odoo/odoo.conf --without-demo=all $addonsList -d ${ODOO_DB_NAME} ${DB_ARGS[@]}`
             exit
         fi
         ;;
     -*)
-        exec `python3 /opt/odoo/odoo-bin --config /etc/odoo/odoo.conf --without-demo=all $extra_addons -d ${DB_NAME} $@ ${DB_ARGS[@]}`
+        exec `python3 /opt/odoo/odoo-bin --config /etc/odoo/odoo.conf --without-demo=all $addonsList -d ${ODOO_DB_NAME} $@ ${DB_ARGS[@]}`
         exit
         ;;
     *)

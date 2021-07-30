@@ -6,12 +6,11 @@ ARG ODOO_BRANCH=14.0
 
 # Install dependencies
 RUN apt update && apt install -y git npm postgresql-client python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
-    libtiff5-dev zlib1g-dev libfreetype6-dev wait-for-it xvfb libfontconfig wkhtmltopdf \
+    libtiff5-dev zlib1g-dev libfreetype6-dev wait-for-it xvfb libfontconfig wkhtmltopdf wget \
     liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev gettext-base unzip
 
 RUN pip install phonenumbers
 RUN npm install -g rtlcss
-RUN apt install -y wget gettext-base
 
 RUN mkdir -p /opt/odoo
 RUN cd /tmp/ && wget https://github.com/mekomsolutions/odoo/archive/refs/heads/${ODOO_BRANCH}.zip \
@@ -20,10 +19,11 @@ RUN cd /opt/odoo && pip install -r requirements.txt
 
 # Expose Odoo services
 EXPOSE 8069 8071 8072
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+VOLUME ["/var/lib/odoo"]
 
 # Set the default config file
-COPY resources/odoo.conf /etc/odoo/odoo.conf
+RUN mkdir -p /etc/odoo /mnt/extra-addons
+COPY resources/odoo.conf /etc/properties/odoo.conf
 ENV ODOO_RC /etc/odoo/odoo.conf
 
 # Copy entrypoint script
