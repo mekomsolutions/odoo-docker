@@ -15,8 +15,8 @@ docker-compose up
 - **PASSWORD**: Database password (default: `odoo`)
 - **DB_NAME**: Database name (default: `odoo`)
 - **ADDONS**: List of addons to be pre-installed
-- **INITIALIZER_CONFIG_FILE_PATH**: odoo-intializer configuration path
-- **INITIALIZER_DATA_FILES_PATH**: odoo-intializer data files path
+- **INITIALIZER_CONFIG_FILE_PATH**: Odoo Intializer configuration path (only if Odoo Initializer addon is installed)
+- **INITIALIZER_DATA_FILES_PATH**: Odoo Intializer data files path (only if Odoo Initializer addon is installed)
 
 ## Volumes
 
