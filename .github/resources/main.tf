@@ -44,7 +44,7 @@ resource "aws_instance" "amd64_builder" {
     "SSH"
   ]
   tags = {
-    Name   = "[GitHub Actions] [Ubuntu] [AMD64 Docker Builder] [Terraform]",
+    Name   = "[GitHub Actions] [Odoo Docker] [Ubuntu] [AMD64 Docker Builder] [Terraform]",
     Type   = "test",
     Owner  = "${data.aws_caller_identity.current.user_id}",
     Groups = "amd64_builder, terraform",

@@ -20,7 +20,7 @@ EOF
 echo "⚙️ Run Docker push commands on remote."
 ssh -t -o StrictHostKeyChecking=no -i $AWS_AMI_PRIVATE_KEY_FILE -p 22 ubuntu@$ip /bin/bash -e << EOF
   cd odoo-docker/
-  echo "⚙️ Pushing Odoo image
+  echo "⚙️ Pushing Odoo image"
   echo "⚙️ Pushing '$DOCKER_USERNAME/odoo:${REVISION}_$arch'..."
   sudo docker push $DOCKER_USERNAME/odoo:${REVISION}_$arch
 EOF
