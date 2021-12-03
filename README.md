@@ -13,9 +13,9 @@ Resources to build custom Docker image for Odoo
 docker-compose up
 ```
 
-### Evironment variables
+### Environment variables
 
-Additionnaly, the image will accept the following environment variable when run:
+Additionally, the image will accept the following environment variable when run:
 
 | Variable name                  | Default |                                    Description                                   |
 |--------------------------------|---------|:--------------------------------------------------------------------------------:|
