@@ -12,6 +12,7 @@ RUN  arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) && \
     wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_${arch}.deb && \
     dpkg -i wkhtmltox_0.12.6-1.buster_${arch}.deb &&  cp /usr/local/bin/wkhtmltopdf /usr/bin && cp /usr/local/bin/wkhtmltoimage /usr/bin
 RUN pip install phonenumbers
+RUN pip install python-jose
 RUN npm install -g rtlcss
 
 RUN mkdir -p /opt/odoo
