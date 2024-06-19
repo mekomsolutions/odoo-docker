@@ -11,14 +11,14 @@ RUN apt update && apt install -y git npm postgresql-client python3-dev libxml2-d
 RUN  arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) && \
     wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_${arch}.deb && \
     dpkg -i wkhtmltox_0.12.6.1-3.bookworm_${arch}.deb &&  cp /usr/local/bin/wkhtmltopdf /usr/bin && cp /usr/local/bin/wkhtmltoimage /usr/bin
-RUN pip3 install phonenumbers
-RUN pip3 install python-jose
+RUN pip install phonenumbers
+RUN pip install python-jose
 RUN npm install -g rtlcss
 
 RUN mkdir -p /opt/odoo
 RUN cd /tmp/ && wget https://github.com/mekomsolutions/odoo/archive/refs/heads/${ODOO_BRANCH}.zip \
     && unzip /tmp/${ODOO_BRANCH}.zip && mv /tmp/odoo-${ODOO_BRANCH}/* /opt/odoo/ && rm /tmp/${ODOO_BRANCH}.zip
-RUN cd /opt/odoo && pip3 install -r requirements.txt
+RUN cd /opt/odoo && pip install -r requirements.txt
 
 # Expose Odoo services
 EXPOSE 8069 8071 8072
