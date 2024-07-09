@@ -14,6 +14,8 @@ RUN  arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) && \
 RUN pip3 install --upgrade pip
 RUN pip3 install phonenumbers
 RUN pip3 install python-jose
+RUN pip install pip setuptools wheel Cython==3.0.0a10
+RUN pip install gevent==20.9.0 --no-build-isolation
 RUN npm install -g rtlcss
 
 RUN mkdir -p /opt/odoo
