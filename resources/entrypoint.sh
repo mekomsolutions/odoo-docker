@@ -33,6 +33,13 @@ if [ -d /etc/properties ]; then
     done
 fi
 
+# env vars substitution for csv files in ${INITIALIZER_DATA_FILES_PATH} directory
+if [ -d "${INITIALIZER_DATA_FILES_PATH}" ]; then
+    for file in "${INITIALIZER_DATA_FILES_PATH}"/**/*.csv; do
+        envsubst < "${file}" | sponge "${file}"
+    done
+fi
+
 extra_addons=""
 if [ ! -z "$ADDONS_LIST" ]; then
     addonsList="-i $ADDONS_LIST"
