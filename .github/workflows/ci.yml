@@ -7,10 +7,9 @@ on:
     types: [published]
 
 jobs:
-  docker-release:
+  publish:
     uses: mekomsolutions/shared-github-workflow/.github/workflows/docker-build-publish.yml@main
     with:
-      download-artifacts: false
       image-name: "odoo"
       image-version: "dev"
     secrets:
