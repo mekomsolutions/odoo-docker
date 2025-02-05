@@ -5,9 +5,15 @@ ENV LANG C.UTF-8
 ARG ODOO_BRANCH=14.0
 
 # Install dependencies
-RUN apt update && apt install -y git npm postgresql-client python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
+RUN apt-get update && apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    git npm postgresql-client python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
     libtiff5-dev zlib1g-dev libfreetype6-dev wait-for-it xvfb libfontconfig moreutils fontconfig wget \
-    liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev gettext-base unzip xfonts-75dpi xfonts-base
+    liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev gettext-base unzip \
+    xfonts-75dpi xfonts-base \
+    && rm -rf /var/lib/apt/lists/*
 RUN  arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) && \
     wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_${arch}.deb && \
     dpkg -i wkhtmltox_0.12.6.1-3.bookworm_${arch}.deb &&  cp /usr/local/bin/wkhtmltopdf /usr/bin && cp /usr/local/bin/wkhtmltoimage /usr/bin
