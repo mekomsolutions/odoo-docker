@@ -1,8 +1,8 @@
-from python:3.9-slim
+from python:3.10-slim
 
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV LANG C.UTF-8
-ARG ODOO_BRANCH=14.0
+ARG ODOO_BRANCH=17.0
 
 # Install dependencies
 RUN apt update && apt install -y git npm postgresql-client python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
@@ -15,7 +15,7 @@ RUN  arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) && \
 RUN pip3 install phonenumbers
 RUN pip3 install python-jose
 RUN pip install pip setuptools wheel Cython==3.0.0a10
-RUN pip install gevent==20.9.0 --no-build-isolation
+RUN pip install gevent==21.8.0 --no-build-isolation
 RUN npm install -g rtlcss
 
 RUN mkdir -p /opt/odoo
